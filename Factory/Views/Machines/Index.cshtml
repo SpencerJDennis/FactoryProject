@@ -1,0 +1,24 @@
+@{
+	Layout = "_Layout";
+}
+
+@using DocOffice.Models;
+
+<h3>All Patients</h3>
+
+@if (Model.Count == 0)
+{
+	<p>No patients yet</p>
+}
+
+<ul>
+	@foreach (Patient patient in Model)
+	{
+		<li>@Html.ActionLink($"{patient.Name}", "Details", new { id = patient.PatientId})</li>
+	}
+</ul>
+
+<p>@Html.ActionLink("Create a Patient Profile", "Create")</p>
+<p>@Html.ActionLink("Create a Doc Profile", "Create", "Doctors")</p>
+<p>@Html.ActionLink("See All Doctors", "Index", "Doctors")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

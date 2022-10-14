@@ -1,0 +1,23 @@
+@{
+	Layout = "_Layout";
+}
+
+@model DocOffice.Models.Patient
+
+<h3>Create New Patient</h3>
+
+@using (Html.BeginForm())
+{
+	@Html.LabelFor(model => model.Name)
+	@Html.TextBoxFor(model => model.Name)
+	@Html.LabelFor(model => model.Birthdate)
+	@Html.TextBoxFor(model => model.Birthdate)
+	@Html.Label("Primary Care Doc")
+	@Html.DropDownList("DoctorId")
+	<input type="submit" value="Add Patient">
+}
+
+<p>@Html.ActionLink("Create a Doc Profile", "Create", "Doctors")</p>
+<p>@Html.ActionLink("See All Doctors", "Index", "Doctors")</p>
+<p>@Html.ActionLink("See All Patients", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

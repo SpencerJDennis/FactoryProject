@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model DocOffice.Models.Doctor
+
+<h1>EDIT</h1>
+
+<h3>You are editing the information for the Doctor: @Html.DisplayFor(model => model.Name)</h3>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.DoctorId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name)
+
+  @Html.Label("Specialty")
+  @Html.DropDownList("SpecialtyId")
+
+  <input type="submit" value="Save"/>
+}
+
+<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
+<p>@Html.ActionLink("See All Doctors", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

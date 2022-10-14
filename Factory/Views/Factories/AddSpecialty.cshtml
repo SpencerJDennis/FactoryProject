@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model DocOffice.Models.Doctor
+
+<h1>ADDING A SPECIALTY TO DOCTOR</h1>
+
+<h4>Add a specialty to doctor @Html.DisplayFor(model => model.Name)</h4>
+
+@using (@Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.DoctorId)
+
+  @Html.Label("Select the specialty")
+  @Html.DropDownList("SpecialtyId")
+
+  <input type="submit" value="Save"/>
+}
+
+<p>@Html.ActionLink("View all doctors", "Index")</p>

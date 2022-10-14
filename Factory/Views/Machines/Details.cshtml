@@ -1,0 +1,37 @@
+@{
+	Layout = "_Layout";
+}
+
+@model DocOffice.Models.Patient
+
+<h2>Patient Details:</h2>
+<hr/>
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h3>@Html.DisplayNameFor(model => model.Birthdate): @Html.DisplayFor(model => model.Birthdate)</h3>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>You Currently have no information for this patient.</p>
+}
+else
+{
+  <h4>Docs' this patient belongs to:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities)
+  {
+    <li>@join.Doctor.Name</li>
+    @using (Html.BeginForm("DeleteDoctor", "Patients"))
+    {
+      @Html.Hidden("joinId", @join.DoctorPatientId)
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+
+<p>@Html.ActionLink("Edit a Patients Info", "Edit", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("Delete this Patient's Info", "Delete", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("Assign a Doctor to the Patient.", "AddDoctor", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
+<p>@Html.ActionLink("See All Doctors", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>
