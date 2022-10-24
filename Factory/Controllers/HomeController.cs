@@ -17,17 +17,10 @@ namespace Factory.Controllers
         _db = db;
       }
 
-      [HttpGet("/")]
-      public ActionResult Login()
-      {
-        return View();
-      }
-
       public ActionResult Index()
       {
-        ViewBag.AllEngineers = _db.Engineers.ToList();
-        ViewBag.AllMachines = _db.Machines.ToList();
-        return View();
+        ViewBag.Machines = new List<Machine>(_db.Machines);
+        return View(_db.Engineers.ToList());
       }
     }
 }

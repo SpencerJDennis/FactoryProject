@@ -6,24 +6,19 @@
 
 <h1>EDIT</h1>
 
-<h4>You are going to edit the information of Machine: @Html.DisplayFor(model => model.Name)</h4>
+<h4>You are going to edit the information of Machine: @Html.DisplayFor(model => model.MachineName)</h4>
 
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.MachineId)
 
-  @Html.LabelFor(model => model.Name)
-  @Html.EditorFor(model => model.Name)
+  @Html.LabelFor(model => model.MachineName)
+  @Html.EditorFor(model => model.MachineName)
 
-  @Html.LabelFor(model => model.Birthdate)
-  @Html.EditorFor(model => model.Birthdate)
-
-  @Html.Label("Select an Engineer")
-  @Html.DropDownList("EngineerId")
+  @Html.LabelFor(model => model.MachineDetails)
+  @Html.EditorFor(model => model.MachineDetails)
 
   <input type="submit" value="Save"/>
 }
 
-<p>@Html.ActionLink("See All Machines", "Index", "Machines")</p>
-<p>@Html.ActionLink("See All Engineers", "Index", "Engineers")</p>
-<p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Return to Machine Home", "Index")</p>

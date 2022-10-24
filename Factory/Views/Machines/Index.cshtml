@@ -14,11 +14,8 @@
 <ul>
 	@foreach (Machine machine in Model)
 	{
-		<li>@Html.ActionLink($"{machine.Name}", "Details", new { id = patient.PatientId})</li>
+		<li>@Html.ActionLink($"{machine.MachineName}", "Details", new { id = machine.MachineId})</li>
 	}
 </ul>
 
 <p>@Html.ActionLink("Create a new Machine Profile", "Create")</p>
-<p>@Html.ActionLink("Create an Engineer Profile", "Create", "Engineers")</p>
-<p>@Html.ActionLink("See All Engineers", "Index", "Engineers")</p>
-<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

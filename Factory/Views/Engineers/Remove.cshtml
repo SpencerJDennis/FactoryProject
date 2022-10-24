@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Factory.Models.EngineerMachine
+
+<h2>WARNING! You are about to remove a machine from this engineer!</h2>
+
+
+@using (Html.BeginForm())
+{
+	<p>Remove: @Html.DisplayFor(model => model.Engineers.EngineerName)</p>
+
+  <p>Remove: @Html.DisplayFor(model => model.Machines.MachineName)</p>
+	<input type="submit" value="Remove" label="Confirm">
+}
+
+<p>@Html.ActionLink("Return to Engineer Home", "Index")</p>

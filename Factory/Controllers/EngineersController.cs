@@ -7,23 +7,24 @@ using System.Linq;
 
 namespace Factory.Controllers
 {
-  public class EngineerController : Controller
+  public class EngineersController : Controller
   {
     private readonly FactoryContext _db;
 
-    public EngineerController(FactoryContext db)
+    public EngineersController(FactoryContext db)
     {
       _db = db;
     }
 
     public ActionResult Index()
     {
-      return View(_db.Engineers.ToList());
+      List<Engineer> model = _db.Engineers.ToList();
+      return View(model);
     }
 
     public ActionResult Create()
     {
-      ViewBag.EngineerId = new SelectList(_db.Machines, "MachineId", "MachineName");
+      ViewBag.EngineerId = new SelectList(_db.Machines, "EngineerId", "EngineerName");
       return View();
     }
 
@@ -39,7 +40,7 @@ namespace Factory.Controllers
     {
       var thisEngineer = _db.Engineers
         .Include(engineer => engineer.JoinEntities)
-        .ThenInclude(join => join.Machine)
+        .ThenInclude(join => join.Machines)
         .FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }

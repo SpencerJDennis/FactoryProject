@@ -2,44 +2,35 @@
 	Layout = "_Layout";
 }
 
-@using DocOffice.Models;
+@model Factory.Models.Engineer;
 
-<h3>Details on @Model.Name</h3>
-
-@if (Model.JoinEntSpec.Count == 0)
-{
-	<p>This Doctor has no specialties!</p> 
-}
+<h3>Details on @Model.EngineerName</h3>
 
 <ul>
-	@foreach(var join in Model.JoinEntSpec)
-	{
-		<li>@Html.ActionLink($"{join.Specialty.Name}", "Details", "Specialties", new { id = join.Specialty.SpecialtyId})</li>
-    @using (Html.BeginForm("DeleteSpecialty", "Doctors"))
-    {
-      @Html.Hidden("joinId", @join.DoctorSpecialtyId)
-      <input type="submit" value="Delete"/>
-    }
-	}
+	<li>@Html.Label("Engineer Name: ")</li>
+	<li>@Html.DisplayFor(model => model.EngineerName)</li>
+
+	<li>@Html.Label("Engineer Liscense: ")</li>
+	<li>@Html.DisplayFor(model => model.EngineerLiscense)</li>
 </ul>
 
 @if (Model.JoinEntities.Count == 0)
 {
-	<p>This Doc has no patients (or friends :'( )</p>
+	<p>This Engineer has no assigned machines!</p>
+}
+else
+{
+	 <h5>Engineers Assigned Machines: </h5>
+  <ul>
+    @foreach(var join in Model.JoinEntities)
+    {
+      <li>@Html.ActionLink($"{@join.Machines.MachineName}", "Details", "Machines", new { id = join.Machines.MachineId })</li> 
+			@Html.ActionLink("Remove", "Remove",  new { id = join.EngineerMachineId })
+    }
+  </ul>
 }
 
-<ul>
-	@foreach (var join in Model.JoinEntities)
-	{
-		<li>@Html.ActionLink($"{join.Patient.Name}", "Details", "Patients", new { id = join.Patient.PatientId})</li>
-	}
-</ul>
-
-<p>@Html.ActionLink("Add a Specialty to this Doctor", "AddSpecialty", new {id = Model.DoctorId })</p>
-<p>@Html.ActionLink("Create a Patient Profile", "Create", "Patients")</p>
-<p>@Html.ActionLink("Create a Doc Profile", "Create")</p>
-<p>@Html.ActionLink("Edit this Doctor's Info", "Edit", new { id = Model.DoctorId })</p>
-<p>@Html.ActionLink("Delete this Doctor", "Delete", new { id = Model.DoctorId })</p>
-<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
-<p>@Html.ActionLink("See All Doctors", "Index")</p>
-<p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Add a Machine", "AddMachine", new {id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Edit Engineer", "Edit", new { id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Delete Engineer", "Delete", new { id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Return to Engineer Home", "Index")</p>

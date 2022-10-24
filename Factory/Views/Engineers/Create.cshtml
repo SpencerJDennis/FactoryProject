@@ -2,21 +2,18 @@
 	Layout = "_Layout";
 }
 
-@model DocOffice.Models.Doctor
+@model Factory.Models.Engineer
 
-<h2>Who's the Doc</h2>
+<h2>Add an Engineer</h2>
 
 @using (Html.BeginForm())
 {
-	@Html.LabelFor(model => model.Name)
-	@Html.TextBoxFor(model => model.Name)
-	@Html.Label("Specialty")
-	@Html.DropDownList("SpecialtyId")
+	@Html.LabelFor(model => model.EngineerName)
+	@Html.TextBoxFor(model => model.EngineerName)
+	@Html.LabelFor(model => model.EngineerLiscense)
+	@Html.TextBoxFor(model => model.EngineerLiscense)
 
-	<input type="submit" value="Add Doc">
+	<input type="submit" value="Add Engineer">
 }
 
-<p>@Html.ActionLink("Create a Patient Profile", "Create", "Patients")</p>
-<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
-<p>@Html.ActionLink("See All Doctors", "Index")</p>
 <p>@Html.ActionLink("Return Home", "Index", "Home")</p>

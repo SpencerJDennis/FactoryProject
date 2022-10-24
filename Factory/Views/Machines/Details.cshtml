@@ -2,36 +2,30 @@
 	Layout = "_Layout";
 }
 
-@model DocOffice.Models.Patient
+@model Factory.Models.Machine
 
-<h2>Patient Details:</h2>
+<h2>Machine Details:</h2>
 <hr/>
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
-<h3>@Html.DisplayNameFor(model => model.Birthdate): @Html.DisplayFor(model => model.Birthdate)</h3>
+<h3>@Html.DisplayNameFor(model => model.MachineName): @Html.DisplayFor(model => model.MachineName)</h3>
+<h3>@Html.DisplayNameFor(model => model.MachineDetails): @Html.DisplayFor(model => model.MachineDetails)</h3>
 
 @if(@Model.JoinEntities.Count == 0)
 {
-  <p>You Currently have no information for this patient.</p>
+  <p>There are currently no Engineers assigned to this machine</p>
 }
 else
 {
-  <h4>Docs' this patient belongs to:</h4>
+  <h4>This Machine is Registered Under These Mechanics:</h4>
   <ul>
   @foreach(var join in Model.JoinEntities)
   {
-    <li>@join.Doctor.Name</li>
-    @using (Html.BeginForm("DeleteDoctor", "Patients"))
-    {
-      @Html.Hidden("joinId", @join.DoctorPatientId)
-      <input type="submit" value="Delete"/>
-    }
+    <li>@Html.ActionLink($"{@join.Engineers.EngineerName}", "Details", "Engineers", new { id = join.Engineers.EngineerId })</li> 
+    @Html.ActionLink("Remove", "Remove",  new { id = join.EngineerMachineId })
   }
   </ul>
 }
 
-<p>@Html.ActionLink("Edit a Patients Info", "Edit", new { id = Model.PatientId })</p>
-<p>@Html.ActionLink("Delete this Patient's Info", "Delete", new { id = Model.PatientId })</p>
-<p>@Html.ActionLink("Assign a Doctor to the Patient.", "AddDoctor", new { id = Model.PatientId })</p>
-<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
-<p>@Html.ActionLink("See All Doctors", "Index")</p>
-<p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Add an Engineer", "AddEngineer", new { id = Model.MachineId })</p>
+<p>@Html.ActionLink("Edit a Machine", "Edit", new { id = Model.MachineId })</p>
+<p>@Html.ActionLink("Delete a Machine", "Delete", new { id = Model.MachineId })</p>
+<p>@Html.ActionLink("Return to Machine Home", "Index")</p>

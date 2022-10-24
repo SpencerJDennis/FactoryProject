@@ -40,7 +40,7 @@ namespace Factory.Controllers
     {
       var thisMachine = _db.Machines
         .Include(machine => machine.JoinEntities)
-        .ThenInclude(join => join.Engineer)
+        .ThenInclude(join => join.Engineers)
         .FirstOrDefault(machine => machine.MachineId == id);
       return View(thisMachine);
     }

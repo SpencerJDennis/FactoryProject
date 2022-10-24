@@ -2,25 +2,23 @@
   Layout = "_Layout";
 }
 
-@model DocOffice.Models.Doctor
+@model Factory.Models.Engineer
 
 <h1>EDIT</h1>
 
-<h3>You are editing the information for the Doctor: @Html.DisplayFor(model => model.Name)</h3>
+<h3>You are editing the information for this Engineer: @Html.DisplayFor(model => model.EngineerName)</h3>
 
 @using (Html.BeginForm())
 {
-  @Html.HiddenFor(model => model.DoctorId)
+  @Html.HiddenFor(model => model.EngineerId)
 
-  @Html.LabelFor(model => model.Name)
-  @Html.EditorFor(model => model.Name)
+  @Html.LabelFor(model => model.EngineerName)
+  @Html.EditorFor(model => model.EngineerName)
 
-  @Html.Label("Specialty")
-  @Html.DropDownList("SpecialtyId")
+  @Html.LabelFor(model => model.EngineerLiscense)
+  @Html.EditorFor(model => model.EngineerLiscense)
 
   <input type="submit" value="Save"/>
 }
 
-<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
-<p>@Html.ActionLink("See All Doctors", "Index")</p>
-<p>@Html.ActionLink("Return Home", "Index", "Home")</p>
+<p>@Html.ActionLink("Return to Engineer Home", "Index")</p>

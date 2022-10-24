@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Factory.Models.EngineerMachine
+
+<h2>Are you sure you want to Remove this Machine from this Mechanic?</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.Label("Engineer Name: ")
+  @Html.DisplayFor(model => model.Engineers.EngineerName)
+  @Html.Label("Machine Name: ")
+  @Html.DisplayFor(model => model.Machines.MachineName)
+
+  <input type="submit" value="Remove" class="btn btn-primary"/>
+}
+
+<p>@Html.ActionLink("Return to Machine Home", "Index")</p>

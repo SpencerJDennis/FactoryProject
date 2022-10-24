@@ -2,17 +2,15 @@
 	Layout = "_Layout";
 }
 
-@using DocOffice.Models;
+@using Factory.Models;
 
 <h2>WARNING</h2>
-<h4>Wow, destroying the records of a sick person.  Real mature.</h4>
+<h4>You are about to remove this Machine!</h4>
 
 @using (Html.BeginForm())
 {
-	<p>Delete the record of @Model.Name</p>
+	<p>Remove: @Model.MachineName</p>
 	<input type="submit" label="Confirm">
 }
 
-<p>@Html.ActionLink("See All Patients", "Index")</p>
-<p>@Html.ActionLink("See All Doctors", "Index", "Doctors")</p>
 <p>@Html.ActionLink("Return Home", "Index", "Home")</p>

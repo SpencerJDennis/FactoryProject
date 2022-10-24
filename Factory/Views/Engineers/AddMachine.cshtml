@@ -2,20 +2,20 @@
   Layout = "_Layout";
 }
 
-@model DocOffice.Models.Doctor
+@model Factory.Models.Engineer
 
-<h1>ADDING A SPECIALTY TO DOCTOR</h1>
+<h1>ADD A MACHINE TO AN ENGINEER</h1>
 
-<h4>Add a specialty to doctor @Html.DisplayFor(model => model.Name)</h4>
+<h4>Add a machine to Engineer @Html.DisplayFor(model => model.EngineerName)</h4>
 
 @using (@Html.BeginForm())
 {
-  @Html.HiddenFor(model => model.DoctorId)
+  @Html.HiddenFor(model => model.EngineerId)
 
-  @Html.Label("Select the specialty")
-  @Html.DropDownList("SpecialtyId")
+  @Html.Label("Select a machine")
+  @Html.DropDownList("MachineId")
 
   <input type="submit" value="Save"/>
 }
 
-<p>@Html.ActionLink("View all doctors", "Index")</p>
+<p>@Html.ActionLink("Return to list", "Index")</p>
