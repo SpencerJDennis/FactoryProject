@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DocOffice.Models;
+using Factory.Models;
 
-namespace DocOffice
+namespace Factory
 {
   public class Startup
   {
@@ -25,7 +25,7 @@ namespace DocOffice
       services.AddMvc();
 
       services.AddEntityFrameworkMySql()
-        .AddDbContext<DocOfficeContext>(options => options
+        .AddDbContext<FactoryContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
     }
 

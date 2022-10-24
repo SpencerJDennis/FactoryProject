@@ -1,17 +1,20 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DocOffice.Models
+namespace Factory.Models
 {
-  public class Patient
+  public class Machine
   {
-    public Patient()
+    public Machine()
     {
-      this.JoinEntities = new HashSet<DoctorPatient>();
+      this.JoinEntities = new HashSet<EngineerMachine>();
     }
 
-    public int PatientId { get; set; }
-    public string Name { get; set; }
-    public string Birthdate { get; set; }
+    public int MachineId { get; set; }
+    public string MachineName { get; set; }
+    public string MachineDetails { get; set; }
     public virtual ICollection<DoctorPatient> JoinEntities {get; set;}
   }
 }

@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace DocOffice.Models
+namespace Factory.Models
 {
-  public class DocOfficeContext : DbContext
+  public class FactoryContext : DbContext
   {
-    public DbSet<Doctor> Doctors { get; set; }
-    public DbSet<Patient> Patients { get; set; }
-    public DbSet<Specialty> Specialties { get; set; }
-    public DbSet<DoctorSpecialty> DoctorSpecialty { get; set; }
-    public DbSet<DoctorPatient> DoctorPatient { get; set; }
+    public DbSet<Engineer> Engineers { get; set; }
+    public DbSet<Machine> Machines { get; set; }
+    public DbSet<DoctorPatient> EngineerMachine { get; set; }
 
     public DocOfficeContext(DbContextOptions options) : base(options) { }
 
