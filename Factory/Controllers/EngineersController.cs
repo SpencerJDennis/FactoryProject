@@ -11,7 +11,7 @@ namespace Factory.Controllers
   {
     private readonly FactoryContext _db;
 
-    public DoctorsController(FactoryContext db)
+    public EngineerController(FactoryContext db)
     {
       _db = db;
     }
@@ -30,14 +30,14 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult Create(Engineer engineer)
     {
-      _db.Engineer.Add(engineer);
+      _db.Engineers.Add(engineer);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
     public ActionResult Details(int id)
     {
-      var thisEngineer = _db.Engineer
+      var thisEngineer = _db.Engineers
         .Include(engineer => engineer.JoinEntities)
         .ThenInclude(join => join.Machine)
         .FirstOrDefault(engineer => engineer.EngineerId == id);
@@ -46,7 +46,7 @@ namespace Factory.Controllers
 
     public ActionResult Edit(int id)
     {
-      var thisEngineer = _db.Engineer.FirstOrDefault(engineer => engineer.EngineerId == id);
+      var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
@@ -68,7 +68,7 @@ namespace Factory.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
-      List<EngineerMachine> thisEgineersJoins = _db.EngineerMachine.ToList();
+      List<EngineerMachine> thisEngineersJoins = _db.EngineerMachine.ToList();
       foreach(EngineerMachine engineermachine in thisEngineersJoins)
       {
         if (engineermachine.EngineerId == id)
@@ -84,10 +84,10 @@ namespace Factory.Controllers
     
     public ActionResult AddMachine(int id)
     {
-      Engineer thisEngineer = _db.Engineer
+      Engineer thisEngineer = _db.Engineers
         .FirstOrDefault(engineer => engineer.EngineerId == id);
       ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "MachineName");
-      return View(thisMachine);
+      return View(thisEngineer);
     }
 
     [HttpPost]
