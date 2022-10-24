@@ -1,116 +1,123 @@
-using DocOffice.Models;
+using Factory.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DocOffice.Controllers
+namespace Factory.Controllers
 {
-  public class PatientsController : Controller
+  public class MachinesController : Controller
   {
-    private readonly DocOfficeContext _db;
+    private readonly FactoryContext _db;
 
-    public PatientsController(DocOfficeContext db)
+    public MachinesController(FactoryContext db)
     {
       _db = db;
     }
 
     public ActionResult Index()
     {
-      return View(_db.Patients.ToList());
+      List<Machine> model = _db.Machines.ToList();
+      return View(model);
     }
 
     public ActionResult Create()
     {
-			ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
+			ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "MachineName");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Patient patient, int DoctorId)
+    public ActionResult Create(Machine machine)
     {
-      _db.Patients.Add(patient);
+      _db.Machines.Add(machine);
       _db.SaveChanges();
-			if (DoctorId != 0)
-			{
-				_db.DoctorPatient.Add(new DoctorPatient() {DoctorId = DoctorId, PatientId = patient.PatientId });
-				_db.SaveChanges();
-			}
       return RedirectToAction("Index");
     }
 
     public ActionResult Details(int id)
     {
-      var thisPatient = _db.Patients
-        .Include(patient => patient.JoinEntities)
-        .ThenInclude(join => join.Patient)
-        .FirstOrDefault(patient => patient.PatientId == id);
-      return View(thisPatient);
+      var thisMachine = _db.Machines
+        .Include(machine => machine.JoinEntities)
+        .ThenInclude(join => join.Engineer)
+        .FirstOrDefault(machine => machine.MachineId == id);
+      return View(thisMachine);
     }
 
     public ActionResult Edit(int id)
     {
-      var thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == id);
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
-      return View(thisPatient);
+      var thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
+      return View(thisMachine);
     }
 
     [HttpPost]
-    public ActionResult Edit(Patient patient, int DoctorId)
+    public ActionResult Edit(Machine machine, int EngineerId)
     {
-      if (DoctorId != 0)
+      if (EngineerId != 0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = DoctorId, PatientId = patient.PatientId});
+        _db.EngineerMachine.Add(new EngineerMachine() { EngineerId = EngineerId, MachineId = machine.MachineId});
       }
-        _db.Entry(patient).State = EntityState.Modified;
+        _db.Entry(machine).State = EntityState.Modified;
         _db.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction("Details", new {id = machine.MachineId});
     }
 
     public ActionResult Delete(int id)
     {
-      var thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == id);
-      return View(thisPatient);
+      var thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
+      return View(thisMachine);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      Patient thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == id);
-      _db.Patients.Remove(thisPatient);
+      Machine thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
+      List<EngineerMachine> thisMachineJoins = _db.EngineerMachine.ToList();
+      foreach(EngineerMachine engineermachine in thisMachineJoins)
+      {
+        if(engineermachine.MachineId == id)
+        {
+          _db.EngineerMachine.Remove(engineermachine);
+        }
+      }
+      _db.Machines.Remove(thisMachine);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddDoctor(int id)
+    public ActionResult AddEngineer(int id)
     {
-      Patient thisPatient = _db.Patients
-        .Include(patient => patient.JoinEntities)
-        .ThenInclude(join => join.Patient)
-        .FirstOrDefault(patient => patient.PatientId == id);
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
-      return View(thisPatient);
+      Machine thisMachine = _db.Machines
+      .FirstOrDefault(machine => machine.MachineId == id);
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "EngineerName");
+      return View(thisMachine);
     }
 
     [HttpPost]
-    public ActionResult AddDoctor(Patient patient, int DoctorId)
+    public ActionResult AddEngineer(Machine machine, int EngineerId)
     {
-      if (DoctorId != 0)
+      if (EngineerId != 0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() {DoctorId = DoctorId, PatientId = patient.PatientId});
+        _db.EngineerMachine.Add(new EngineerMachine() {EngineerId = EngineerId, MachineId = machine.MachineId});
         _db.SaveChanges();
       }
-    return RedirectToAction("Index");
+    return RedirectToAction("Details", new {id = machine.MachineId});
     }
 
-    [HttpPost]
-    public ActionResult DeleteDoctor(int joinId)
+    public ActionResult Remove(int id)
     {
-      var thisJoin = _db.DoctorPatient.FirstOrDefault(doctor => doctor.DoctorPatientId == joinId);
-      _db.DoctorPatient.Remove(thisJoin);
+      var thisJoin = _db.EngineerMachine.FirstOrDefault(engineermachine => engineermachine.EngineerMachineId == id);
+      return View(thisJoin);
+    }
+
+    [HttpPost, ActionName("Remove")]
+    public ActionResult RemoveConfirmed(int id)
+    {
+      var thisJoin = _db.EngineerMachine.FirstOrDefault(engineermachine => engineermachine.EngineerMachineId == id);
+      _db.EngineerMachine.Remove(thisJoin);
       _db.SaveChanges();
-      return RedirectToAction("Index");
+      return RedirectToAction("Details", new { id = thisJoin.MachineId});
     }
   }
 }
